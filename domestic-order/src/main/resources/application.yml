@@ -1,0 +1,20 @@
+server:
+  # 服务端口号
+  port: 8082
+spring:
+  application:
+    name: domestic-order
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 172.23.243.214:8848  # Nacos服务器地址
+        namespace: 9d203bfc-2869-4b13-94fb-fbc46786afd0
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://172.25.78.181:3306/qq?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8
+    username: root
+    password: root
+    type: com.alibaba.druid.pool.DruidDataSource
+
+mybatis-plus:
+  mapper-locations: classpath:/mapper/*.xml

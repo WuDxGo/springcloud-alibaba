@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: domestic-service
+  profiles:
+    active: dev
+  cloud:
+    nacos:
+      config:
+        server-addr: 172.23.243.214:8848
+        namespace: 9d203bfc-2869-4b13-94fb-fbc46786afd0
+        group: DEFAULT_GROUP
+        file-extension: yml
+        shared-configs: common.yml #公共配置
+        extension-configs[0]: #引用其他配置，可配置多个
+          data-id: xiao.yml #引用其他配置文件
+          refresh: true #自动刷新
+          group: DEFAULT_GROUP #默认组，可以不写
+        extension-configs[1]: #可配置多个
+          data-id: aa.yml #引用其他配置文件
+          refresh: true #自动刷新

@@ -1,0 +1,22 @@
+server:
+  #服务端口号
+  port: 8080
+spring:
+  application:
+    #服务名称 - 服务之间使用名称进行通讯
+    name: domestic-gateway
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 172.23.243.214:8848 # 替换为你的Nacos地址
+        namespace: 9d203bfc-2869-4b13-94fb-fbc46786afd0
+    gateway:
+      routes:
+        - id: domestic-service
+          uri: lb://domestic-service
+          predicates:
+            - Path=/service/**
+        - id: domestic-order
+          uri: lb://domestic-order
+          predicates:
+            - Path=/order/**
