@@ -15,13 +15,13 @@
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>
-            <!--<exclusions>
-                &lt;!&ndash; 移除feign-form-spring依赖，存在漏洞，此依赖作用是发送 multipart 表单数据 &ndash;&gt;
+            <exclusions>
+                <!-- 移除commons-fileupload依赖，存在漏洞，此依赖作用是发送 multipart 表单数据 -->
                 <exclusion>
-                    <groupId>io.github.openfeign</groupId>
-                    <artifactId>feign-form-spring</artifactId>
+                    <groupId>commons-fileupload</groupId>
+                    <artifactId>commons-fileupload</artifactId>
                 </exclusion>
-            </exclusions>-->
+            </exclusions>
         </dependency>
     </dependencies>
 </project>
