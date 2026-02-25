@@ -9,7 +9,6 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 @RestController
-//@RequestMapping("/service")
 @RefreshScope
 public class HousekeepingController {
 
@@ -40,8 +39,6 @@ public class HousekeepingController {
 
     /**
      * 九九乘法表
-     *
-     * @return
      */
     @GetMapping(value = "/cf99")
     public String cf99() {

@@ -9,4 +9,3 @@ public class DomesticGatewayApplication {
         SpringApplication.run(DomesticGatewayApplication.class, args);
     }
 }
-

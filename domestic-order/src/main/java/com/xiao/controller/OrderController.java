@@ -9,7 +9,6 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 @RestController
-//@RequestMapping("/order")
 public class OrderController {
     @Resource
     private DomesticServiceFeign domesticServiceFeign;
@@ -33,8 +32,8 @@ public class OrderController {
     /**
      * 调用domestic-service
      */
-    @GetMapping("/call_cf99")
-    public String call_cf99() {
+    @GetMapping("/callCf99")
+    public String callCf99() {
         return domesticServiceFeign.cf99();
     }
 }
