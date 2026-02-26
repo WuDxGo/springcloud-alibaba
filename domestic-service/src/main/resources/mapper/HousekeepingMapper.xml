@@ -10,7 +10,7 @@
         <result property="password" column="password" jdbcType="VARCHAR"/>
     </resultMap>
 
-    <select id="getUserList" resultMap="BaseResultMap">
+    <select id="getUserList" resultType="com.xiao.entity.User">
         select * from user
     </select>
 </mapper>

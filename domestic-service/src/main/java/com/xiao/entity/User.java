@@ -1,5 +1,8 @@
 package com.xiao.entity;
 
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * 用户表
  *
@@ -10,34 +13,12 @@ package com.xiao.entity;
  * @Version [1.0]
  * @Version [1.0] [2026/2/25 17:15] [WuDx] 创建类
  */
+@Setter
+@Getter
 public class User {
     private String id;
 
     private String userName;
 
     private String password;
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
 }
