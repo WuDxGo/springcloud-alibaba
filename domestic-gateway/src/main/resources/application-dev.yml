@@ -18,7 +18,7 @@ spring:
         username: ${spring.cloud.nacos.config.username}
         password: ${spring.cloud.nacos.config.password}
       config:
-        server-addr: 10.108.183.17:8848
+        server-addr: localhost:8848
         namespace: 6662f928-1f3c-453c-bb2d-083806cdc7d3
         group: domestic-gateway
         refresh-enabled: true
