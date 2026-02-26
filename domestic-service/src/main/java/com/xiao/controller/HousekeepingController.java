@@ -1,5 +1,8 @@
 package com.xiao.controller;
 
+import com.xiao.entity.User;
+import com.xiao.service.impl.HousekeepingService;
+import jakarta.annotation.Resource;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -7,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.List;
 
 @RestController
 @RefreshScope
@@ -20,6 +24,9 @@ public class HousekeepingController {
 
     @Value("${my}")
     private String my;
+
+    @Resource
+    private HousekeepingService housekeepingService;
 
     @GetMapping("/helloWorld")
     public String helloWorld() {
@@ -50,5 +57,10 @@ public class HousekeepingController {
             sb.append("\r\n");
         }
         return sb.toString();
+    }
+
+    @GetMapping(value = "/getUserList")
+    public List<User> getUserList() {
+        return housekeepingService.getUserList();
     }
 }
