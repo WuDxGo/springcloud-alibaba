@@ -3,8 +3,8 @@ package com.xiao.client;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-@FeignClient("domestic-service")
+@FeignClient("product-service")
 public interface DomesticServiceFeign {
-    @RequestMapping("/service/cf99")
+    @RequestMapping("/product/cf99")
     String cf99();
 }

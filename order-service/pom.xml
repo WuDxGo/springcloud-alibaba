@@ -12,15 +12,17 @@
     <artifactId>order-service</artifactId>
 
     <dependencies>
-        <!-- 内部依赖：通用模块 -->
-        <dependency>
-            <groupId>com.xiao</groupId>
-            <artifactId>common</artifactId>
-        </dependency>
 
         <dependency>
             <groupId>com.xiao</groupId>
             <artifactId>api</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <!-- 公共组件模块（包含 Feign 拦截器等） -->
+        <dependency>
+            <groupId>com.xiao</groupId>
+            <artifactId>common</artifactId>
             <version>${project.version}</version>
         </dependency>
 
@@ -30,34 +32,27 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
-        <!-- Spring Boot Security Starter -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-security</artifactId>
-        </dependency>
-
-        <!-- Nacos服务发现 -->
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
         </dependency>
 
-        <!-- Nacos配置中心 -->
+        <!-- OAuth2 资源服务器 - 用于验证 JWT Token -->
         <dependency>
-            <groupId>com.alibaba.cloud</groupId>
-            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
         </dependency>
 
-        <!-- MyBatis Plus -->
+        <!-- Spring Security -->
         <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
 
-        <!-- MySQL驱动 -->
+        <!-- OpenFeign -->
         <dependency>
-            <groupId>com.mysql</groupId>
-            <artifactId>mysql-connector-j</artifactId>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
         </dependency>
     </dependencies>
 
@@ -67,7 +62,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>com.xiao.order.OrderApplication</mainClass>
+                    <mainClass>com.xiao.order.OrderServiceApplication</mainClass>
                 </configuration>
             </plugin>
         </plugins>

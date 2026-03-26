@@ -16,7 +16,7 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>
             <exclusions>
-                <!-- 移除commons-fileupload依赖，存在漏洞，此依赖作用是发送 multipart 表单数据 -->
+                <!-- 移除 commons-fileupload 依赖，存在漏洞，此依赖作用是发送 multipart 表单数据 -->
                 <exclusion>
                     <groupId>commons-fileupload</groupId>
                     <artifactId>commons-fileupload</artifactId>
