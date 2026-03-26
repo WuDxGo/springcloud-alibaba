@@ -1,3 +1,6 @@
+#spring:
+#  profiles:
+#    active: @profileActive@
 server:
   port: 8081
 
