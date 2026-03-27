@@ -9,13 +9,14 @@
         <outputRelativeToContentRoot value="true" />
         <module name="gateway-server" />
         <module name="product-service" />
+        <module name="common-security" />
         <module name="api" />
         <module name="order-service" />
+        <module name="common" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="auth-server" target="17" />
-      <module name="common" target="17" />
       <module name="user-service" target="17" />
     </bytecodeTargetLevel>
   </component>

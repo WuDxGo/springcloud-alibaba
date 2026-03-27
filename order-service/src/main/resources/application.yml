@@ -1,29 +1,3 @@
-server:
-  port: 8083
-
 spring:
-  application:
-    name: order-service
-
-  # OAuth2 资源服务器配置
-  security:
-    oauth2:
-      resourceserver:
-        jwt:
-          jwk-set-uri: http://localhost:8080/oauth2/jwks
-          issuer-uri: http://localhost:8080
-
-  cloud:
-    nacos:
-      discovery:
-        server-addr: localhost:8848
-        namespace: 6662f928-1f3c-453c-bb2d-083806cdc7d3
-        group: domestic-gateway
-        username: nacos
-        password: nacos
-
-# 日志配置
-logging:
-  level:
-    com.xiao.order: INFO
-    org.springframework.security: INFO
+  profiles:
+    active: @profileActive@

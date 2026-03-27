@@ -1,6 +1,0 @@
-com\xiao\gateway\filter\OAuth2TokenRelayFilter.class
-com\xiao\gateway\GatewayApplication.class
-com\xiao\gateway\controller\AuthController.class
-com\xiao\gateway\config\FilterConfig.class
-com\xiao\gateway\config\ReactiveJwtAuthenticationConverterAdapter.class
-com\xiao\gateway\config\SecurityConfig.class

@@ -168,7 +168,7 @@ spring:
       discovery:
         server-addr: localhost:8848
         namespace: 6662f928-1f3c-453c-bb2d-083806cdc7d3
-        group: domestic-gateway
+        group: gateway-server
         username: nacos
         password: nacos
 
@@ -398,7 +398,7 @@ spring:
       discovery:
         server-addr: localhost:8848
         namespace: 6662f928-1f3c-453c-bb2d-083806cdc7d3
-        group: domestic-gateway
+        group: gateway-server
         username: nacos
         password: nacos
 
@@ -554,7 +554,7 @@ spring:
       discovery:
         server-addr: localhost:8848
         namespace: 6662f928-1f3c-453c-bb2d-083806cdc7d3
-        group: domestic-gateway
+        group: gateway-server
         username: nacos
         password: nacos
 

@@ -1,7 +1,0 @@
-com\xiao\service\impl\HousekeepingService.class
-com\xiao\service\IHousekeepingService.class
-com\xiao\config\SecurityConfig.class
-com\xiao\controller\HousekeepingController.class
-com\xiao\mapper\HousekeepingMapper.class
-com\xiao\ProductServiceApplication.class
-com\xiao\entity\User.class

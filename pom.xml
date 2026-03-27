@@ -12,6 +12,7 @@
 	<modules>
 		<module>api</module>
 		<module>common</module>
+		<module>common-security</module>
 		<module>order-service</module>
 		<module>product-service</module>
 		<module>gateway-server</module>

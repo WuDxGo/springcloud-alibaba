@@ -1,14 +1,7 @@
-nacos:
-  common-group: nacos-common
-
 spring:
   config:
     import: #指定加载配置的方式以及文件
       - nacos:application-nacos.yml
-      - nacos:application-billinglog.yml
-      - nacos:common-rocketmq-zb-config.yml?server-addr=${spring.cloud.nacos.config.server-addr}&group=${nacos.common-group}
-      - nacos:common-application-db.yml?server-addr=${spring.cloud.nacos.config.server-addr}&group=${nacos.common-group}
-      - nacos:common-redis-config.yml?server-addr=${spring.cloud.nacos.config.server-addr}&group=${nacos.common-group}
   cloud:
     nacos:
       discovery:
@@ -20,7 +13,7 @@ spring:
       config:
         server-addr: localhost:8848
         namespace: 6662f928-1f3c-453c-bb2d-083806cdc7d3
-        group: domestic-gateway
+        group: gateway-server
         refresh-enabled: true
         username: nacos
         password: nacos
