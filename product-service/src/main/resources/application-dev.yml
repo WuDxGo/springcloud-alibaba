@@ -3,7 +3,7 @@ nacos:
 
 spring:
   config:
-    import: #指定加载配置的方式以及文件
+    import:
       - nacos:application-nacos.yml
       - nacos:common-application-db.yml?server-addr=${spring.cloud.nacos.config.server-addr}&group=${nacos.common-group}
       - nacos:common-redis-config.yml?server-addr=${spring.cloud.nacos.config.server-addr}&group=${nacos.common-group}
@@ -16,9 +16,15 @@ spring:
         username: ${spring.cloud.nacos.config.username}
         password: ${spring.cloud.nacos.config.password}
       config:
-        server-addr: localhost:8848
-        namespace: 6662f928-1f3c-453c-bb2d-083806cdc7d3
         group: product-service
         refresh-enabled: true
-        username: nacos
-        password: nacos
+
+# Actuator 配置
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  endpoint:
+    health:
+      show-details: always

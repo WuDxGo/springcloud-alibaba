@@ -19,7 +19,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @SpringBootApplication
 @EnableFeignClients(
     basePackages = "com.xiao.client",
-    defaultConfiguration = FeignTokenInterceptor.class
+    defaultConfiguration = com.xiao.common.feign.FeignConfig.class
 )
 public class OrderServiceApplication {
     public static void main(String[] args) {

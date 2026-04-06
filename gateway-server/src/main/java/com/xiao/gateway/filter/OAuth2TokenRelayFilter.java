@@ -14,7 +14,10 @@ import reactor.core.publisher.Mono;
 /**
  * OAuth2 Token 传递过滤器
  * 将用户的 JWT Token 传递给下游服务
+ * 
+ * 注意：此 Bean 通过 FilterConfig 手动注册，以便精确控制过滤器顺序和依赖注入
  */
+@Component
 public class OAuth2TokenRelayFilter implements GlobalFilter, Ordered {
 
     private final ServerOAuth2AuthorizedClientRepository authorizedClientRepository;
