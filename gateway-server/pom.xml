@@ -68,9 +68,6 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <configuration>
-                    <mainClass>com.xiao.gateway.GatewayApplication</mainClass>
-                </configuration>
             </plugin>
         </plugins>
     </build>

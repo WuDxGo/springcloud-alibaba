@@ -10,8 +10,8 @@ import org.springframework.security.oauth2.client.web.server.ServerOAuth2Authori
 /**
  * Gateway 过滤器配置
  * 
- * 注意：OAuth2TokenRelayFilter 已通过 @Component 注解注册，
- * 此处保留手动注册方式以便精确控制过滤器顺序和依赖注入
+ * 注意：OAuth2TokenRelayFilter 不使用 @Component 注解，
+ * 此处通过手动注册方式精确控制过滤器顺序和依赖注入
  */
 @Configuration
 public class FilterConfig {

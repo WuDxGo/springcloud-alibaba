@@ -72,9 +72,6 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <configuration>
-                    <mainClass>com.xiao.order.OrderServiceApplication</mainClass>
-                </configuration>
             </plugin>
         </plugins>
     </build>
