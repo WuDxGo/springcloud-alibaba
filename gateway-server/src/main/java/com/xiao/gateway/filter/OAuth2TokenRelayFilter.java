@@ -1,5 +1,6 @@
 package com.xiao.gateway.filter;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.Ordered;
@@ -14,10 +15,11 @@ import reactor.core.publisher.Mono;
 /**
  * OAuth2 Token 传递过滤器
  * 将用户的 JWT Token 传递给下游服务
- * 
+ *
  * 注意：此类不使用 @Component 注解，而是通过 FilterConfig 手动注册，
  * 以便精确控制过滤器顺序和依赖注入
  */
+@Slf4j
 public class OAuth2TokenRelayFilter implements GlobalFilter, Ordered {
 
     private final ServerOAuth2AuthorizedClientRepository authorizedClientRepository;
@@ -38,6 +40,7 @@ public class OAuth2TokenRelayFilter implements GlobalFilter, Ordered {
                 return authorizedClientRepository.loadAuthorizedClient(registrationId, oauth2Token, exchange)
                     .flatMap(authorizedClient -> {
                         if (authorizedClient == null) {
+                            log.debug("未找到 OAuth2 授权客户端: {}", registrationId);
                             return chain.filter(exchange);
                         }
 
@@ -49,13 +52,18 @@ public class OAuth2TokenRelayFilter implements GlobalFilter, Ordered {
                                 .request(builder -> builder.header(HttpHeaders.AUTHORIZATION,
                                     "Bearer " + tokenValue))
                                 .build();
+                            log.debug("已传递 OAuth2 Token 到下游服务");
                             return chain.filter(mutatedExchange);
                         }
+                        log.debug("OAuth2 AccessToken 为空，跳过传递");
                         return chain.filter(exchange);
                     });
             })
             // 如果没有 OAuth2AuthenticationToken 或发生错误，继续请求
-            .onErrorResume(e -> chain.filter(exchange));
+            .onErrorResume(e -> {
+                log.warn("OAuth2 Token 传递失败，继续请求: {}", e.getMessage());
+                return chain.filter(exchange);
+            });
     }
 
     @Override
