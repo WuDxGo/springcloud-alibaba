@@ -1,11 +1,11 @@
 package com.xiao.gateway.config;
 
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
-import org.springframework.security.oauth2.client.registration.ReactiveClientRegistrationRepository;
 import org.springframework.security.oauth2.client.web.server.ServerOAuth2AuthorizedClientRepository;
 import org.springframework.security.oauth2.client.web.server.WebSessionServerOAuth2AuthorizedClientRepository;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
@@ -25,18 +25,14 @@ import static org.springframework.web.reactive.function.server.RequestPredicates
 @EnableWebFluxSecurity
 public class SecurityConfig {
 
-    private final ReactiveClientRegistrationRepository clientRegistrationRepository;
-
-    public SecurityConfig(ReactiveClientRegistrationRepository clientRegistrationRepository) {
-        this.clientRegistrationRepository = clientRegistrationRepository;
-    }
-
     @Bean
+    @ConditionalOnProperty(prefix = "common.security", name = "enabled", havingValue = "true", matchIfMissing = true)
     public ServerOAuth2AuthorizedClientRepository authorizedClientRepository() {
         return new WebSessionServerOAuth2AuthorizedClientRepository();
     }
 
     @Bean
+    @ConditionalOnProperty(prefix = "common.security", name = "enabled", havingValue = "true", matchIfMissing = true)
     public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
         http
             // 完全禁用 CSRF（WebFlux OAuth2 登录需要）
@@ -94,9 +90,27 @@ public class SecurityConfig {
     }
 
     @Bean
+    @ConditionalOnProperty(prefix = "common.security", name = "enabled", havingValue = "false")
+    public SecurityWebFilterChain permitAllSecurityWebFilterChain(ServerHttpSecurity http) {
+        http
+            .csrf(ServerHttpSecurity.CsrfSpec::disable)
+            .authorizeExchange(exchanges -> exchanges
+                .anyExchange().permitAll()
+            )
+            .headers(headers -> headers
+                .frameOptions(frameOptions -> frameOptions
+                    .mode(XFrameOptionsServerHttpHeadersWriter.Mode.SAMEORIGIN)
+                )
+            );
+
+        return http.build();
+    }
+
+    @Bean
+    @ConditionalOnProperty(prefix = "common.security", name = "enabled", havingValue = "true", matchIfMissing = true)
     public JwtAuthenticationConverter jwtAuthenticationConverter() {
         JwtGrantedAuthoritiesConverter grantedAuthoritiesConverter = new JwtGrantedAuthoritiesConverter();
-        grantedAuthoritiesConverter.setAuthorityPrefix("ROLE_");
+        grantedAuthoritiesConverter.setAuthorityPrefix("");
         grantedAuthoritiesConverter.setAuthoritiesClaimName("authorities");
 
         JwtAuthenticationConverter jwtAuthenticationConverter = new JwtAuthenticationConverter();
@@ -108,6 +122,7 @@ public class SecurityConfig {
      * 配置登录错误页面路由
      */
     @Bean
+    @ConditionalOnProperty(prefix = "common.security", name = "enabled", havingValue = "true", matchIfMissing = true)
     public RouterFunction<ServerResponse> loginErrorRoute() {
         return RouterFunctions.route(GET("/login"), request -> {
             String error = request.queryParam("error").orElse(null);

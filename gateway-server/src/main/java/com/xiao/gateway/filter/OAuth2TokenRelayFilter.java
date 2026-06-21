@@ -8,7 +8,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.security.oauth2.client.web.server.ServerOAuth2AuthorizedClientRepository;
 import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
-import org.springframework.stereotype.Component;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
@@ -30,40 +30,45 @@ public class OAuth2TokenRelayFilter implements GlobalFilter, Ordered {
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
-        // 尝试获取 OAuth2AuthenticationToken
         return exchange.getPrincipal()
-            .cast(OAuth2AuthenticationToken.class)
-            .flatMap(oauth2Token -> {
-                String registrationId = oauth2Token.getAuthorizedClientRegistrationId();
+            .flatMap(principal -> {
+                if (principal instanceof JwtAuthenticationToken jwtToken) {
+                    return chain.filter(withBearerToken(exchange, jwtToken.getToken().getTokenValue()));
+                }
 
-                // 使用 authorizedClientRepository 加载已授权的客户端
-                return authorizedClientRepository.loadAuthorizedClient(registrationId, oauth2Token, exchange)
-                    .flatMap(authorizedClient -> {
-                        if (authorizedClient == null) {
-                            log.debug("未找到 OAuth2 授权客户端: {}", registrationId);
+                if (principal instanceof OAuth2AuthenticationToken oauth2Token) {
+                    String registrationId = oauth2Token.getAuthorizedClientRegistrationId();
+
+                    return authorizedClientRepository.loadAuthorizedClient(registrationId, oauth2Token, exchange)
+                        .flatMap(authorizedClient -> {
+                            if (authorizedClient == null) {
+                                log.debug("未找到 OAuth2 授权客户端: {}", registrationId);
+                                return chain.filter(exchange);
+                            }
+
+                            OAuth2AccessToken accessToken = authorizedClient.getAccessToken();
+                            if (accessToken != null) {
+                                log.debug("已传递 OAuth2 Token 到下游服务");
+                                return chain.filter(withBearerToken(exchange, accessToken.getTokenValue()));
+                            }
+                            log.debug("OAuth2 AccessToken 为空，跳过传递");
                             return chain.filter(exchange);
-                        }
+                        });
+                }
 
-                        OAuth2AccessToken accessToken = authorizedClient.getAccessToken();
-                        if (accessToken != null) {
-                            String tokenValue = accessToken.getTokenValue();
-                            // 将 Token 添加到请求头，传递给下游服务
-                            ServerWebExchange mutatedExchange = exchange.mutate()
-                                .request(builder -> builder.header(HttpHeaders.AUTHORIZATION,
-                                    "Bearer " + tokenValue))
-                                .build();
-                            log.debug("已传递 OAuth2 Token 到下游服务");
-                            return chain.filter(mutatedExchange);
-                        }
-                        log.debug("OAuth2 AccessToken 为空，跳过传递");
-                        return chain.filter(exchange);
-                    });
+                return chain.filter(exchange);
             })
-            // 如果没有 OAuth2AuthenticationToken 或发生错误，继续请求
+            .switchIfEmpty(chain.filter(exchange))
             .onErrorResume(e -> {
                 log.warn("OAuth2 Token 传递失败，继续请求: {}", e.getMessage());
                 return chain.filter(exchange);
             });
+    }
+
+    private ServerWebExchange withBearerToken(ServerWebExchange exchange, String tokenValue) {
+        return exchange.mutate()
+            .request(builder -> builder.header(HttpHeaders.AUTHORIZATION, "Bearer " + tokenValue))
+            .build();
     }
 
     @Override

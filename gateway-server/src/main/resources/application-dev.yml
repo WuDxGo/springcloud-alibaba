@@ -1,7 +1,11 @@
+nacos:
+  common-group: nacos-common
+
 spring:
   config:
     import:
       - nacos:application-nacos.yml
+      - nacos:common-security.yml?server-addr=${spring.cloud.nacos.config.server-addr}&group=${nacos.common-group}
   cloud:
     nacos:
       discovery:

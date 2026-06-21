@@ -4,10 +4,10 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
  * 安全配置属性
- * 
+ *
  * <h3>配置前缀：</h3>
  * <p>{@code common.security}</p>
- * 
+ *
  * <h3>配置示例：</h3>
  * <pre>
  * common:
