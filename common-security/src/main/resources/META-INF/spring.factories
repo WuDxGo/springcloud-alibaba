@@ -1,3 +1,0 @@
-# Auto Configure
-org.springframework.boot.autoconfigure.AutoConfiguration.imports=\
-com.xiao.common.security.AutoSecurityConfig
