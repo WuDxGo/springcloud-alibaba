@@ -26,12 +26,6 @@
             <artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
         </dependency>
 
-        <!-- Spring Boot AutoConfigure（自动配置支持） -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-autoconfigure</artifactId>
-        </dependency>
-
         <!-- Spring Boot Configuration Processor（配置属性提示） -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
